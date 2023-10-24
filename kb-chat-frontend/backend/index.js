@@ -14,9 +14,9 @@ const io = socketIo(server);
 
 // Serve static files (if needed)
 app.use("/static" , express.static("static"))
-app.use(express.urlencoded())
-// app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
 
+// app.use(express.static("public"));
 
 // Define a route for the root URL
 app.get("/", (req, res) => {
