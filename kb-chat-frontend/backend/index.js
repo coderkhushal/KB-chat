@@ -13,7 +13,7 @@ const server = http.createServer(app);
 const io = socketIo(server);
 
 // Serve static files (if needed)
-app.use("/static",express.static("static",    {setHeaders: (res, path) => {
+app.use(express.static("static",    {setHeaders: (res, path) => {
     if (path.endsWith('.css')) {
         res.setHeader('Content-Type', 'text/css');
     }
