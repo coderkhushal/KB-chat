@@ -1,0 +1,87 @@
+.maincontainer{
+    /* display: flex; */
+    height: 80vh;
+    width: 70%;
+    border: 2px solid black;
+    border-radius: 3rem;
+    margin: auto;
+
+}
+
+.messagecontainer{
+    height: 90%;
+    width: 100%;
+    border-radius: 3rem;
+    border: 2px solid black;
+    overflow: auto;
+}
+
+.inputcontainer {
+    display: flex;
+    font-size: x-large;
+    justify-content: center;
+    align-items: center;
+    padding:0.5rem;
+
+}
+.inputcontainer input{
+    /* padding: 0.5rem ; */
+    width: 80%;
+    border-radius: 2rem;
+}
+
+.left{
+    float: left;
+    clear: both;
+}
+.right{
+    float: right;
+    clear: both;
+}
+
+.text{
+    border: 2px solid black;
+    border-radius: 2rem;
+    padding: 1rem;
+    margin:  10px 1rem;
+
+}
+
+.announcement{
+    clear: both;
+    width: 80%;
+    text-align:center;
+    font-size: large;
+    padding: 1rem;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+.primary-h{
+    font-size: 3rem;
+    margin: auto;
+    width: 20rem;
+}
+
+.personscontainer{
+    position: absolute;
+    top: 3.6rem;
+    width: 14%;
+    border: 2px solid black;
+    border-radius: 2rem;
+    height: 80vh;
+    overflow: auto;
+}
+.persons h1{
+    position: absolute;
+    top: 0;
+    width: 14%;
+    margin: auto;
+    text-align: center;
+}
+li{
+    font-size: large;
+    margin: 0.5rem 0;
+
+
+}
