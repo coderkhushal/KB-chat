@@ -4,6 +4,18 @@
 <head>
     <title>Socket.io Chat Example</title>
     <style>
+        *{
+            color:white
+        }
+        input{
+            color:black;
+        }
+        body{
+            background:url("https://th.bing.com/th/id/OIP.z7A9AagxUFgpHRfVkt2RSQHaEK?rs=1&pid=ImgDetMain") ;
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
         .maincontainer {
             /* display: flex; */
             height: 80vh;
@@ -70,6 +82,7 @@
             font-size: 3rem;
             margin: auto;
             width: 20rem;
+            color:white
         }
 
         .personscontainer {
@@ -121,6 +134,7 @@
     </div>
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <script>
+
         const socket = io()
         const name = prompt("enter your name")
         const messagecontainer = document.querySelector(".messagecontainer")
@@ -151,7 +165,7 @@
 
         //handling sending messages
         messagebox = document.getElementById("messagebox")
-        document.getElementById("submitbtn").addEventListener("click", () => {
+        const sendmessage=()=>{
             if (messagebox.value != "") {
                 socket.emit("send-message", messagebox.value)
                 sentmessage = document.createElement("div")
@@ -160,6 +174,9 @@
                 messagecontainer.appendChild(sentmessage)
                 messagebox.value = ""
             }
+        }
+        document.getElementById("submitbtn").addEventListener("click", () => {
+            sendmessage()
         })
 
 
@@ -190,6 +207,11 @@
                 }
             }
 
+        })
+        document.addEventListener("keypress",(e)=>{
+            if(e.key=="Enter"){
+                sendmessage()
+            }
         })
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
