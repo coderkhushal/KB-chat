@@ -28,22 +28,42 @@ app.get("/", (req, res) => {
     
 });
 
+const rooms= {}
 const users= {}
+// {
+    //socketid: {
+        // name: name,
+        // roomid:roomid
+    // }
+// } 
 
 // Set up a Socket.io connection event
 io.on("connection", (socket) => {
-    socket.on("new-user-connected",name=>{
-        users[socket.id]= name;
-        io.emit("new-user-joined",{name:name, socketid:socket.id,users:users})
+    socket.on("join-room",(roomid)=>{
+        socket.join(roomid)
+    })
+    socket.on("new-user-connected",(data)=>{
+        let {roomid,name}=data
+        users[socket.id]={name:name,roomid:roomid}
+        if(!rooms[roomid]){
+
+            rooms[roomid]={}
+        }
+        rooms[roomid][socket.id]= name;
+        
+        io.to(roomid).emit("new-user-joined",{name:name, socketid:socket.id,users:rooms[roomid]})
     })
 
-    socket.on("send-message",message=>{
-        io.emit("new-message",{socketid:socket.id, message:message,name:users[socket.id]})
+    socket.on("send-message",(data)=>{
+        let {message, roomid} =data
+        io.to(roomid).emit("new-message",{socketid:socket.id, message:message,name:rooms[roomid][socket.id]})
     })
 
     socket.on("disconnect",()=>{
-        io.emit("user-left",users[socket.id])
-        delete users[socket.id];
+        io.to(users[socket.id].roomid).emit("user-left",users[socket.id].name)
+        
+        delete rooms[users[socket.id].roomid][socket.id];
+        delete users[socket.id]
     })
 
 //     // Handle events when a user sends a message

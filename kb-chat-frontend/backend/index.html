@@ -5,13 +5,13 @@
     <title>Socket.io Chat Example</title>
     <style>
         *{
-            color:white
+            color:black
         }
         input{
             color:black;
         }
         body{
-            background:url("https://th.bing.com/th/id/OIP.z7A9AagxUFgpHRfVkt2RSQHaEK?rs=1&pid=ImgDetMain") ;
+            background:url("https://th.bing.com/th/id/OIP.07eZcZU2Lr61ppyyYz_LxQHaEo?rs=1&pid=ImgDetMain") ;
             background-size: cover;
             background-position: center;
             color: white;
@@ -82,7 +82,7 @@
             font-size: 3rem;
             margin: auto;
             width: 20rem;
-            color:white
+            color:black
         }
 
         .personscontainer {
@@ -136,12 +136,13 @@
     <script>
 
         const socket = io()
+        const roomid= prompt("Enter Room ID")
         const name = prompt("enter your name")
         const messagecontainer = document.querySelector(".messagecontainer")
         const usercontainer = document.querySelector(".personscontainer")
         //new user joined event emission
-        socket.emit("new-user-connected", name)
-
+        socket.emit("join-room",roomid)
+        socket.emit("new-user-connected", {name,roomid})
         //new user joined even listening
         socket.on("new-user-joined", data => {
             if (data.socketid != socket.id) {
@@ -167,7 +168,7 @@
         messagebox = document.getElementById("messagebox")
         const sendmessage=()=>{
             if (messagebox.value != "") {
-                socket.emit("send-message", messagebox.value)
+                socket.emit("send-message", {message:messagebox.value,roomid:roomid})
                 sentmessage = document.createElement("div")
                 sentmessage.classList.add("right", "text")
                 sentmessage.innerText = messagebox.value;
@@ -187,7 +188,7 @@
                 messagerecieved.classList.add("left", "text")
                 messagerecieved.innerText = data.name + "\n" + data.message
                 messagecontainer.appendChild(messagerecieved)
-                console.log(data.message)
+                
             }
         })
 
@@ -213,6 +214,7 @@
                 sendmessage()
             }
         })
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
